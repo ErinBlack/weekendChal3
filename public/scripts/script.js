@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 displayTasks();
 $('#addTask').on('click', addTask);
+
 });//end onReady
 
 function displayTasks(){
@@ -38,4 +39,7 @@ function addTask(){
       console.log('back from the server with response', response);
     }//end success
   }); // end ajax call
+  $('.taskList').empty();
+  displayTasks();
+  $('#taskInput').val('');
 } // end addTask function

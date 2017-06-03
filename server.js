@@ -76,7 +76,7 @@ app.post('/addTask', function(req, res){
       console.log('connected to db on addTask');
       var taskSend = req.body.task;
       var taskStatus = req.body.completed;
-      var resultSet = connection.query("INSERT INTO things_to_do(task, completed) VALUES('test task to add', false);");
+      var resultSet = connection.query("INSERT INTO things_to_do(task, completed) VALUES('" + taskSend + "'," + taskStatus + ");");
       console.log('result set', resultSet);
       done();
       res.send(200);
