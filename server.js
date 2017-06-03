@@ -15,8 +15,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.listen(port, function(){
   console.log('server up on 8080');
 });
-
+//get index.html on the page
 app.get('/', function(req,res){
   console.log('url hit on /');
-  res.sendFile(path.resolve('public/view/index.html'));
-});
+  res.sendFile(path.resolve('public/views/index.html'));
+}); // end get / get request 
