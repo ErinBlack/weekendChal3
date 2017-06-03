@@ -49,20 +49,37 @@ app.get('/allTasks', function(req, res){
       res.send(400);
     }//end if statement
     else{
-      console.log('connected to db');
+      console.log('connected to db on allTasks');
       var resultSet = connection.query("SELECT * FROM things_to_do");
       resultSet.on('row', function(row){
         allTasks.push(row);
-        console.log(allTasks);
 
       });// end function
       resultSet.on('end',function(){
         done();
-        console.log(resultSet);
         res.send(allTasks);
       }); //end function
     } // end else statement
   }); // end database connection
-
-
 }); // end get
+
+
+app.post('/addTask', function(req, res){
+  console.log('addTask url hit');
+  pool.connect(function(err, connection, done){
+    if(err){
+      console.log(err);
+      done();
+      res.send(400);
+    }//end if statement
+    else{
+      console.log('connected to db on addTask');
+      var taskSend = req.body.task;
+      var taskStatus = req.body.completed;
+      var resultSet = connection.query("INSERT INTO things_to_do(task, completed) VALUES('test task to add', false);");
+      console.log('result set', resultSet);
+      done();
+      res.send(200);
+    }//end else
+  }); //end pool connection
+});// end post
