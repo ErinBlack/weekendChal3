@@ -63,7 +63,7 @@ app.get('/allTasks', function(req, res){
   }); // end database connection
 }); // end get
 
-
+//posting a new task from the database
 app.post('/addTask', function(req, res){
   console.log('addTask url hit');
   pool.connect(function(err, connection, done){
@@ -83,3 +83,59 @@ app.post('/addTask', function(req, res){
     }//end else
   }); //end pool connection
 });// end post
+
+app.delete('/deleteTask', function(req, res){
+  console.log('deleteTask url hit');
+  pool.connect(function(err, connection, done){
+    if(err){
+      console.log(err);
+      done();
+      res.send(400);
+    } //end if
+    else{
+      console.log('connected to db on deleteTask');
+      var deleteID = req.body.id;
+      console.log('deleteId', deleteID);
+      var resultSet = connection.query("DELETE FROM things_to_do WHERE id = " + deleteID + ";");
+      console.log('delete task result set', resultSet);
+      done();
+      res.send(200);
+    }//end else
+  });
+}); // end delete
+
+app.put('/markTaskTrue', function(req, res){
+  console.log('markTask url hit');
+  pool.connect(function(err, connection, done){
+    if(err){
+      console.log(err);
+      done();
+      res.send(400);
+    }//end if
+    else{
+      console.log('connected to db on markTask');
+      var taskID = req.body.id;
+      var resultSet = connection.query("UPDATE things_to_do SET completed = true WHERE id =" + taskID + ";");
+      done();
+      res.send(200);
+    }
+  }); //end pool connection
+});// end markTaskTrue
+
+app.put('/markTaskFalse', function(req, res){
+  console.log('markTaskFalse url hit');
+  pool.connect(function(err, connection, done){
+    if(err){
+      console.log(err);
+      done();
+      res.send(400);
+    }//end if
+    else{
+      console.log('connected to db on markTask');
+      var taskID = req.body.id;
+      var resultSet = connection.query("UPDATE things_to_do SET completed = false WHERE id =" + taskID + ";");
+      done();
+      res.send(200);
+    }
+  }); //end pool connection
+});// end markTaskTrue
