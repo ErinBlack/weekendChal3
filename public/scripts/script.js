@@ -49,7 +49,7 @@ function displayTasks(){
 function addTask(){
   console.log('addTask entered');
   var objectToSend = {
-    task: $('#taskInput').val(),
+    task: $('.taskInput').val(),
     completed: 'false'
   };// end object to send
   console.log('object to send', objectToSend);
@@ -63,7 +63,7 @@ function addTask(){
   }); // end ajax call
   $('.taskList').empty();
   displayTasks();
-  $('#taskInput').val('');
+  $('.taskInput').val('');
 } // end addTask function
 
 
