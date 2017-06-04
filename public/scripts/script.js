@@ -18,16 +18,23 @@ function displayTasks(){
       var responseBack = response[i];
       var responseStatus = response[i].completed;
       console.log('response status', responseStatus);
-      var checkbox = "<input type='checkbox' class='allCheckbox' value='" + responseStatus +"' name='task' id='" + responseBack.id+ "'>";
-        $('.taskList').append('<li>  '+ checkbox + responseBack.task +
+      var checkbox = "<input type='checkbox' class='allCheckbox' value='" + responseStatus +
+      "' name='task' id='" + responseBack.id+ "'>";
+      $('.taskList').append('<li>  '+ checkbox + '<label>' + responseBack.task + '</label>' +
         '<button type="button" name="remove" class="deleteTask" id="' +
         responseBack.id + '">Delete</button></li>');
+
+      if(response[i].completed === true){
+        console.log('if completed statment', response[i].id);
+        $('#' + response[i].id ).prop('checked', true);
+      }
     } // end forloop
   }, //end function
   error: function(error){
     console.log('The /allTasks ajax get request failed with error: ', error);
   } // end erro
 }); // end ajax call
+
 } // end displayTasks
 
 
@@ -104,3 +111,5 @@ function markTask(){
     }); // end ajax
   }// end else
 }//end marking task
+
+//change completed task coloring
