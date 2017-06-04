@@ -71,10 +71,13 @@ function addTask(){
 function deleteTask(){
   console.log('deleteTask entered');
   var intId = Number(this.id);
-
   var taskToDelete = {
     id: intId
   };
+
+  if (confirm("Are you sure?")) {
+      // your deletion code
+
   console.log('taskToDelete', taskToDelete);
   $.ajax({
     type: 'DELETE',
@@ -86,6 +89,11 @@ function deleteTask(){
   });//end ajax call
   $('.taskList').empty();
   displayTasks();
+
+}
+else{
+return false;
+}
 }// end deleteTask
 
 // marking task as completed
