@@ -33,16 +33,20 @@ function displayTasks(){
         $('#' + thisId ).prop('checked', true);
 
          $('ul.taskList').find('input#' + thisId).parent().appendTo('ul.taskList');
+
       }
       else{
           var thisIdFalse = response[i].id;
          $('ul.taskList').find('input#' + thisIdFalse).parent().prependTo('ul.taskList');
+
       }
     } // end forloop
+    setCSS();
   }, //end function
   error: function(error){
     console.log('The /allTasks ajax get request failed with error: ', error);
   } // end erro
+
 }); // end ajax call
 
 } // end displayTasks
@@ -67,7 +71,7 @@ function addTask(){
   $('.taskList').empty();
   displayTasks();
   $('.taskInput').val('');
-  swapCSS();
+  setCSS();
 } // end addTask function
 
 
@@ -138,23 +142,25 @@ function markTask(){
 
 //change completed task coloring
 
-//swapCSS
+//swapCSS when a button is clicked
 function swapCSS(){
-  changeColors(this);
-  function changeColors(color){
-    var thisId = color.id;
-    console.log('swapp css entered');
-    $("header").removeClass(colorScheme + "Header");
-    $(".taskBody").removeClass(colorScheme + "Body");
-    $(".taskInput").removeClass(colorScheme + "Input");
-    $("label").removeClass(colorScheme + "Label");
+  // remove old color classes
+  console.log('swapp css entered');
+  $("header").removeClass(colorScheme + "Header");
+  $(".taskBody").removeClass(colorScheme + "Body");
+  $(".taskInput").removeClass(colorScheme + "Input");
+  $("label").removeClass(colorScheme + "Label");
 
-    $("header").addClass(thisId+ "Header");
-    $(".taskBody").addClass(thisId + "Body");
-    $(".taskInput").addClass(thisId + "Input");
-    $("label").addClass(thisId + "Label");
-  }
-
+  // Current button id is the color
   colorScheme = this.id;
+  setCSS(colorScheme);
+} // end swapCSS
 
+function setCSS(){
+  console.log('entered SET CSS');
+  console.log('colorScheme', colorScheme);
+  $("header").addClass(colorScheme+ "Header");
+  $(".taskBody").addClass(colorScheme + "Body");
+  $(".taskInput").addClass(colorScheme + "Input");
+  $("label").addClass(colorScheme + "Label");
 }
