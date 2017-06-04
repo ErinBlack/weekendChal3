@@ -1,11 +1,14 @@
 $(document).ready(function(){
 
 displayTasks();
-$('#addTask').on('click', addTask);
+$('.addTask').on('click', addTask);
 $('.taskList').on('click', '.deleteTask', deleteTask );
 $('.taskList').on('click', '.allCheckbox', markTask);
+$('.colors').on('click', swapCSS);
 
 });//end onReady
+
+var colorScheme = "yellow";
 
 function displayTasks(){
   console.log('displayTasks entered');
@@ -20,7 +23,7 @@ function displayTasks(){
       console.log('response status', responseStatus);
       var checkbox = "<input type='checkbox' class='allCheckbox' value='" + responseStatus +
       "' name='task' id='" + responseBack.id+ "'>";
-      $('.taskList').prepend('<li>  '+ checkbox + '<label>' + responseBack.task + '</label>' +
+      $('.taskList').prepend('<li>  '+ checkbox + '<label class="yellowLabel">' + responseBack.task + '</label>' +
         '<button type="button" name="remove" class="deleteTask" id="' +
         responseBack.id + '">Delete</button></li>');
 
@@ -64,6 +67,7 @@ function addTask(){
   $('.taskList').empty();
   displayTasks();
   $('.taskInput').val('');
+  swapCSS();
 } // end addTask function
 
 
@@ -133,3 +137,24 @@ function markTask(){
 }//end marking task
 
 //change completed task coloring
+
+//swapCSS
+function swapCSS(){
+  changeColors(this);
+  function changeColors(color){
+    var thisId = color.id;
+    console.log('swapp css entered');
+    $("header").removeClass(colorScheme + "Header");
+    $(".taskBody").removeClass(colorScheme + "Body");
+    $(".taskInput").removeClass(colorScheme + "Input");
+    $("label").removeClass(colorScheme + "Label");
+
+    $("header").addClass(thisId+ "Header");
+    $(".taskBody").addClass(thisId + "Body");
+    $(".taskInput").addClass(thisId + "Input");
+    $("label").addClass(thisId + "Label");
+  }
+
+  colorScheme = this.id;
+
+}

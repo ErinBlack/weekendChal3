@@ -3,21 +3,23 @@
   max-width: 960px;
   margin: 0 auto;
 }
-
+/* Header*/
+header{
+  overflow:hidden;
+  width: 100%;
+}
 
 /* Text styles */
 h1 {
   font-family: 'Roboto', sans-serif;
   font-size: 1em;
-  background-color: #eab91f;
-  color: white;
   padding: 10px 0 10px 20px;
   margin: 0;
-  border-bottom: solid 3px #dca41f;
+  float: left;
+  width: 50%;
 }
 
 label {
-    color: #666666;
     font-family: 'Open Sans', sans-serif;
     font-size: .6em;
 }
@@ -29,11 +31,7 @@ label {
 ul{
   padding: 0 10px;
 }
-.taskBody{
-  width: 100%;
-  background-color: #f8d843;
-  padding: 0 0 20px 0;
-}
+
 ul {list-style: none;}
 input[type=checkbox]:checked + label {
 color: gray;
@@ -46,15 +44,16 @@ text-decoration: line-through;
   font-style: italic;
   padding: 5px;
   margin: 5px 0 5px 5px;
-  background-color: #fff1b0;
-  color: #666666;
   border: none;
   width: 150px;
 }
 
+.taskBody{
+  width: 100%;
+  padding: 0 0 20px 0;
+}
 .taskInput:focus {
     outline: none !important;
-    border:1px solid #eab91f;
     box-shadow: none;
 }
 
@@ -77,20 +76,154 @@ button:hover{
 button{
   font-family: 'Open Sans', sans-serif;
   text-decoration: underline;
-  color: #666666;
   border: none;
-  background-color:#f8d843;
+  background-color : transparent;
   font-size: .5em;
   height: 20px;
 }
 
-#addTask{
-}
+
 
 ul {list-style: none;}
 input[type=checkbox]:checked + label {
 color: gray;
 text-decoration: line-through;
 font-style: italic;
+}
 
+
+/* Color Selectors*/
+.colorSelector{
+  width: 30%;
+  float: right;
+  margin: 10px 0 0 0 ;
+  padding: 0;
+
+}
+.colors{
+  width: 10px;
+  height: 10px;
+  border: solid .5px #636363;
+  display: inline-block;
+}
+#blue{
+  background-color: #086da3;
+}
+
+#yellow{
+  background-color: #eab91f;
+}
+
+#red{
+  background-color: #b42b42;
+}
+
+#green{
+  background-color: #307f1e;
+}
+
+
+/* Color Classes */
+  /* Yellow Classes */
+  .yellowBody{
+    background-color: #f8d843;
+  }
+
+  .yellowHeader{
+    background-color: #eab91f;
+    color: white;
+    border-bottom: solid 3px #dca41f;
+  }
+  .yellowInput {
+    background-color: #fff1b0;
+    color: #666666;
+  }
+  .yellowButton{
+    color: #666666;
+  }
+
+  .yellowLabel{
+    color: #666666;
+  }
+
+  .yellowInput:focus {
+      border:1px solid #eab91f;
+  }
+
+  /* Blue Classes */
+.blueHeader {
+  background-color: #0b83c2;
+  color: white;
+  border-bottom: solid 3px #086da3;
+}
+
+.blueBody{
+  background-color: #8cc8e8;
+}
+
+.blueInput {
+    background-color: #a4d8f4;
+}
+.blueInput:focus {
+    border:1px solid #0b83c2;
+}
+
+.blueButton{
+  color: #666666;
+}
+
+.blueLabel{
+  color: black;
+}
+
+/* Green Classes */
+.greenHeader {
+background-color: #3a8f3b;
+color: white;
+border-bottom: solid 3px #28753b;
+}
+
+.greenBody{
+background-color: #7cc584;
+}
+
+.greenInput {
+  background-color: #9fdda6;
+}
+.greenInput:focus {
+    border:1px solid #3a8f3b;
+}
+
+.greenButton{
+color: #666666;
+}
+
+.greenLabel{
+color: black;
+}
+
+/* REd Classes */
+.redHeader {
+background-color: #c54147;
+color: white;
+border-bottom: solid 3px #ad1f26;
+}
+
+.redBody{
+background-color: #e47479;
+}
+
+.redInput {
+  background-color: #ea9b9f;
+}
+
+.redInput:focus {
+    border:1px solid #c54147;
+}
+.redButton{
+color: #666666;
+}
+
+.redLabel{
+color: white;
 }
