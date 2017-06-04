@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 
+
 //getting all tasks from the database
-router.use('/allTasks', function(req, res){
+router.get('/allTasks', function(req, res){
   console.log('executed get tasks');
   var allTasks = [];
   //open up connection to database
@@ -27,4 +28,6 @@ router.use('/allTasks', function(req, res){
     } // end else statement
   }); // end database connection
 }); // end get
+
+
 module.exports = router;

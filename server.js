@@ -2,8 +2,7 @@
 var express = require('express');
 var app = express();
 var index = require('./routes/index');
-var addTask = require('./routes/addTask');
-var getTasks = require('./routes/getTasks');
+var task = require('./routes/task');
 var path = require('path');
 var bodyParser = require('body-parser');
 var pg = require('pg');
@@ -27,8 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', index);
-app.get('/addTask', addTask);
-app.get('/getTasks', getTasks);
+app.use('/task', task);
 
 //listen
 app.listen(port, function(){

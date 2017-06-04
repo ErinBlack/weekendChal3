@@ -20,13 +20,20 @@ function displayTasks(){
       console.log('response status', responseStatus);
       var checkbox = "<input type='checkbox' class='allCheckbox' value='" + responseStatus +
       "' name='task' id='" + responseBack.id+ "'>";
-      $('.taskList').append('<li>  '+ checkbox + '<label>' + responseBack.task + '</label>' +
+      $('.taskList').prepend('<li>  '+ checkbox + '<label>' + responseBack.task + '</label>' +
         '<button type="button" name="remove" class="deleteTask" id="' +
         responseBack.id + '">Delete</button></li>');
 
       if(response[i].completed === true){
-        console.log('if completed statment', response[i].id);
-        $('#' + response[i].id ).prop('checked', true);
+        var thisId = response[i].id;
+        console.log('if completed statment', thisId);
+        $('#' + thisId ).prop('checked', true);
+
+         $('ul.taskList').find('input#' + thisId).parent().appendTo('ul.taskList');
+      }
+      else{
+          var thisIdFalse = response[i].id;
+         $('ul.taskList').find('input#' + thisIdFalse).parent().prependTo('ul.taskList');
       }
     } // end forloop
   }, //end function
@@ -95,7 +102,10 @@ function markTask(){
       url: '/markTaskTrue',
       data: taskToMark,
       success: function(response){
+        var thisId = this.data;
         console.log('back from the server with taskToMarkTrue response', response);
+        $('ul.taskList').find('input#' + thisId.slice(3)).parent().appendTo('ul.taskList');
+
       }
     }); // end ajax
 
@@ -107,6 +117,8 @@ function markTask(){
       data: taskToMark,
       success: function(response){
         console.log('back from the server with taskToMarkFalse response', response);
+        var thisId = this.data;
+          $('ul.taskList').find('input#' + thisId.slice(3)).parent().prependTo('ul.taskList');
       }
     }); // end ajax
   }// end else
