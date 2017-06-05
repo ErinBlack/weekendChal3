@@ -15,7 +15,7 @@ var pool = new pg.Pool(config);
 
 
 //getting all tasks from the database
-router.get('/allTasks/', function(req, res){
+router.get('/allTasks', function(req, res){
   console.log('executed get tasks');
   var allTasks = [];
   //open up connection to database

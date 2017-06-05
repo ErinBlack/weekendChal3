@@ -15,7 +15,6 @@ function displayTasks(){
   getTasks();
 } // end displayTasks
 
-
 // //added a task to the database
 function addTask(){
   console.log('addTask entered');
@@ -26,72 +25,59 @@ function addTask(){
   postTask(objectToSend);
  } // end addTask function
 
+//  deleting a task from a database
+function deleteTask(){
+  console.log('deleteTask entered');
+  var intId = Number(this.id);
+  console.log('DeleteTask This', this);
+  var taskToDelete = {
+       id: intId
+     };
 
-// // deleting a task from a database
-// function deleteTask(){
-//   console.log('deleteTask entered');
-//   var intId = Number(this.id);
-//   var taskToDelete = {
-//     id: intId
-//   };
-//
-//   if (confirm("Are you sure?")) {
-//       // your deletion code
-//
-//   console.log('taskToDelete', taskToDelete);
-//   $.ajax({
-//     type: 'DELETE',
-//     url: '/task/deleteTask',
-//     data: taskToDelete,
-//     success: function(response){
-//       console.log('back from the server with tasktoDelete response', response);
-//     } // end success
-//   });//end ajax call
-//   $('.taskList').empty();
-//   displayTasks();
-// }
-// else{
-// return false;
-// }
-// }// end deleteTask
+  if (confirm('Are you sure?')){
+     // deletion code
+     deleteFromServer(taskToDelete);
+  }
+  else{return false;}
+ }// end deleteTask
 
-// // marking task as completed
-// function markTask(){
-//   console.log('mark task entered');
-//   var checkboxId = Number(this.id);
-//   var taskToMark = {
-//     id: checkboxId
-//   };
-//
-//   if(this.checked ){
-//     $.ajax({
-//       type:'PUT',
-//       url: '/task/markTaskTrue',
-//       data: taskToMark,
-//       success: function(response){
-//         var thisId = this.data;
-//         console.log('back from the server with taskToMarkTrue response', response);
-//         $('ul.taskList').find('input#' + thisId.slice(3)).parent().appendTo('ul.taskList');
-//
-//       }
-//     }); // end ajax
-//
-//   }
-//   else{
-//     $.ajax({
-//       type:'PUT',
-//       url: '/task/markTaskFalse',
-//       data: taskToMark,
-//       success: function(response){
-//         console.log('back from the server with taskToMarkFalse response', response);
-//         var thisId = this.data;
-//           $('ul.taskList').find('input#' + thisId.slice(3)).parent().prependTo('ul.taskList');
-//       }
-//     }); // end ajax
-//   }// end else
-// }//end marking task
+// marking task as completed
+function markTask(){
+  console.log('mark task entered');
+  var checkboxId = Number(this.id);
+  var taskToMark = {
+    id: checkboxId
+  };
 
-//change completed task coloring
+  if(this.checked ){
+    $.ajax({
+      type:'PUT',
+      url: '/task/markTaskTrue',
+      data: taskToMark,
+      success: function(response){
+        var thisId = this.data;
+        console.log('back from the server with taskToMarkTrue response', response);
+        $('ul.taskList').find('input#' + thisId.slice(3)).parent().appendTo('ul.taskList');
+
+      }
+    }); // end ajax
+
+  }
+  else{
+    $.ajax({
+      type:'PUT',
+      url: '/task/markTaskFalse',
+      data: taskToMark,
+      success: function(response){
+        console.log('back from the server with taskToMarkFalse response', response);
+        var thisId = this.data;
+          $('ul.taskList').find('input#' + thisId.slice(3)).parent().prependTo('ul.taskList');
+      }
+    }); // end ajax
+  }// end else
+}//end marking task
+
+
 
 //swapCSS when a button is clicked
 function swapCSS(){
@@ -116,10 +102,10 @@ function setCSS(){
   $("label").addClass(colorScheme + "Label");
 }
 
-
 /* ---AJAX CALLS --- */
 
 function getTasks(){
+  console.log('getTasks entered');
   $.get('/task/allTasks')
     .done(updateDOM)
     .fail(weHaveFailed);
@@ -127,29 +113,30 @@ function getTasks(){
 }
 
 function postTask(task){
+  console.log('postTask entered');
   $.post('/task/addTask', task)
     .done(getTasks)
     .fail(weHaveFailed);
 }
 
-//   $.ajax({
-//     type:'POST',
-//     url:'/task/addTask/',
-//     data: objectToSend,
-//     success: function(response){
-//       console.log('back from the server with response', response);
-//     }//end success
-//   }); // end ajax call
-//   $('.taskList').empty();
-//   displayTasks();
-//   $('.taskInput').val('');
-//   setCSS();
-
-
+function deleteFromServer(task){
+  console.log('deleteFromServer entered');
+  console.log('TASK DATA', task);
+  $.ajax({
+     type: 'DELETE',
+     url: '/task/deleteTask',
+     data: task,
+     success: function(response){
+       console.log('back from the server with tasktoDelete response', response);
+     } // end success
+   });//end ajax call
+   displayTasks();
+}
 
 /* ---Update the DOM --- */
 
 function updateDOM(tasks){
+  console.log('updateDom was entered');
   $('.taskList').empty();
   tasks.forEach(function(task){
     //shorthands for task properites
@@ -160,7 +147,7 @@ function updateDOM(tasks){
     "' name='task' id='" + taskId + "'>";
     $('.taskList').prepend('<li>  '+ checkbox + '<label class="yellowLabel">' + taskText + '</label>' +
       '<button type="button" name="remove" class="deleteTask" id="' +
-    tasks.id + '">Delete</button></li>');
+    task.id + '">Delete</button></li>');
 
     if(taskStatus === true){
       console.log('if completed statment', taskId);
@@ -170,21 +157,9 @@ function updateDOM(tasks){
     else{
         var thisIdFalse = task.id;
        $('ul.taskList').find('input#' + thisIdFalse).parent().prependTo('ul.taskList');
-
     }
-
   });
-
-  // for (var i = 0; i < tasks.length; i++) {
-  //   console.log('entered for loop');
-  //   var responseBack = tasks[i];
-  //   var responseStatus = tasks[i].completed;
-  //   var responseTask = tasks[i].task;
-  //   console.log('response status', responseTask);
-
-
 } //end function
-
 
 /** ----- Utility Functions ----- **/
 function weHaveFailed() {
