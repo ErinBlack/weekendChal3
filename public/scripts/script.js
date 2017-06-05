@@ -14,7 +14,7 @@ function displayTasks(){
   console.log('displayTasks entered');
   $.ajax({
     type: 'GET',
-    url: '/allTasks',
+    url: '/task/allTasks',
     success:function(response){
     console.log('back from server', response);
     for (var i = 0; i < response.length; i++) {
@@ -31,9 +31,7 @@ function displayTasks(){
         var thisId = response[i].id;
         console.log('if completed statment', thisId);
         $('#' + thisId ).prop('checked', true);
-
          $('ul.taskList').find('input#' + thisId).parent().appendTo('ul.taskList');
-
       }
       else{
           var thisIdFalse = response[i].id;
@@ -62,7 +60,7 @@ function addTask(){
   console.log('object to send', objectToSend);
   $.ajax({
     type:'POST',
-    url:'/addTask',
+    url:'/task/addTask/',
     data: objectToSend,
     success: function(response){
       console.log('back from the server with response', response);
@@ -89,7 +87,7 @@ function deleteTask(){
   console.log('taskToDelete', taskToDelete);
   $.ajax({
     type: 'DELETE',
-    url: '/deleteTask',
+    url: '/task/deleteTask',
     data: taskToDelete,
     success: function(response){
       console.log('back from the server with tasktoDelete response', response);
@@ -97,7 +95,6 @@ function deleteTask(){
   });//end ajax call
   $('.taskList').empty();
   displayTasks();
-
 }
 else{
 return false;
@@ -115,7 +112,7 @@ function markTask(){
   if(this.checked ){
     $.ajax({
       type:'PUT',
-      url: '/markTaskTrue',
+      url: '/task/markTaskTrue',
       data: taskToMark,
       success: function(response){
         var thisId = this.data;
@@ -129,7 +126,7 @@ function markTask(){
   else{
     $.ajax({
       type:'PUT',
-      url: '/markTaskFalse',
+      url: '/task/markTaskFalse',
       data: taskToMark,
       success: function(response){
         console.log('back from the server with taskToMarkFalse response', response);
@@ -151,7 +148,7 @@ function swapCSS(){
   $(".taskInput").removeClass(colorScheme + "Input");
   $("label").removeClass(colorScheme + "Label");
 
-  // Current button id is the color
+  // Current butt
   colorScheme = this.id;
   setCSS(colorScheme);
 } // end swapCSS
